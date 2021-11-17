@@ -1,0 +1,6 @@
+FROM python:3.9.5-alpine3.13
+# workdir相当于cd，改变现在的路径，如果路径不存在则会自动创建路径
+workdir /app
+# 下例子中，由于使用了相对路径，py会被放在app下
+COPY hello.py hello.py
+CMD ["python3","/app/hello.py"]

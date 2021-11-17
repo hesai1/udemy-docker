@@ -1,0 +1,12 @@
+FROM ubuntu:21.04
+# ARG创建一个本dockerfile使用的变量，作用范围只限于dockerfile创建image时
+# 在dockerfile中ARG可以在run中使用但是无法在CMD中使用
+# docker在build的时候，可以使用--build-arg [list]来指定使用的ARG，而不用修改dockerfile文件本身
+ARG VERSION=2.0.1
+
+RUN apt-get update && \
+    apt-get install -y wget && \
+    wget https://github.com/ipinfo/cli/releases/download/ipinfo-${VERSION}/ipinfo_${VERSION}_linux_amd64.tar.gz && \
+    tar zxf ipinfo_${VERSION}_linux_amd64.tar.gz && \
+    mv ipinfo_${VERSION}_linux_amd64 /usr/bin/ipinfo && \
+    rm -rf ipinfo_${VERSION}_linux_amd64.tar.gz

@@ -1,0 +1,5 @@
+FROM python:3.9.5-alpine3.13
+# 和copy一样，如果文件是压缩包则会自动解压
+# 如本例中，会将hello.tar.gz中的py文件放入/app下，而不是tar包本身
+ADD hello.tar.gz /app/
+CMD ["python3","/app/hello.py"]

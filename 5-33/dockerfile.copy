@@ -1,0 +1,4 @@
+FROM python:3.9.5-alpine3.13
+# copy到指定目录，如果目录不存在会自动创建
+COPY hello.py /app/hello.py
+CMD ["python3","/app/hello.py"]
