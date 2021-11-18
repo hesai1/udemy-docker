@@ -1,0 +1,8 @@
+FROM python:3.9.5-slim
+RUN pip install flask
+WORKDIR /src
+ENV FLASK_APP=app.py
+EXPOSE 5000
+# 把可能回变的内容，尽量往后移动
+COPY app.py /src/app.py
+CMD ["flask", "run", "-h", "localhost"]
