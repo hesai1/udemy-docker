@@ -1,0 +1,3 @@
+FROM ubuntu:21.04
+ENV NAME=docker
+CMD ["echo", "hello $NAME"]
