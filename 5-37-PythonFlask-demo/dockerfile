@@ -1,0 +1,15 @@
+FROM python:3.9.5-slim
+COPY app.py /src/app.py
+
+RUN pip install flask
+
+WORKDIR /src
+
+# Flask看来是默认读取环境变量中的 ${FLASK_APP}来确定运行的入口的程序名字
+ENV FLASK_APP=app.py
+
+EXPOSE 5000
+
+# CMD ["flask", "run", "-h", "0.0.0.0"]
+# 原因不明，但是使用host0.0.0.0启动没法访问，改为localhost则没事
+CMD ["flask", "run", "-h", "localhost"]
