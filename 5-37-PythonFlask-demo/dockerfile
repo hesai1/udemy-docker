@@ -12,4 +12,4 @@ EXPOSE 5000
 
 # CMD ["flask", "run", "-h", "0.0.0.0"]
 # 原因不明，但是使用host0.0.0.0启动没法访问，改为localhost则没事
-CMD ["flask", "run", "-h", "localhost"]
+CMD ["flask", "run", "-h", "localhost"] 
