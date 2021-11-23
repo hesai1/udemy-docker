@@ -10,3 +10,18 @@ ENV FLASK_APP=app.py
 EXPOSE 5000 
 
 CMD flask run -h 0.0.0.0
+
+
+# dockerignore文件类似与git的gitignore文件
+
+# <目的>
+# 在我们通常的build是
+#   例如ocker image build -t demo .
+# 这里最后的 . 指context，相当于我们的作业目录，
+# 在build image时第一步就是把 context目录的文件全部[复制]到临时目录
+#   如果使用client-server模式的docker，则会将文件传[输到]到docker引擎的server上去
+# 所以如果context里边有很多不必要的文件，将会延长我们的build速度
+# 而且时处于安全考虑，我们不希望当前文件下的一些重要的如password等文件被随意传输
+
+# <用法>
+# docker文件中直接写上需要无视的文件路径即可

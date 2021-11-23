@@ -1,0 +1,20 @@
+build.sh
+
+
+# <使用前>
+# hesai@STORM-PC:/docker-test/5-39-context-ignore$ . ./build.sh 
+# [+] Building 2.6s (10/10) FINISHED
+#  => [internal] load build definition from dockerfile                                                         0.1s 
+#  => => transferring dockerfile: 890B            <--  注意这里                                                      0.0s 
+#  => [internal] load .dockerignore                                                                            0.0s 
+#  => => transferring context: 34B                                                                             0.0s 
+# ....
+
+# <使用后>
+# esai@STORM-PC:/docker-test/5-39-context-ignore$ . ./build.sh 
+# [+] Building 0.9s (9/9) FINISHED
+#  => [internal] load build definition from dockerfile                                                         0.0s 
+#  => => transferring dockerfile: 38B            <--   注意这里，dockerignore 中定义了忽略build脚本，因此传输大小减少                                                            0.0s 
+#  => [internal] load .dockerignore                                                                            0.0s 
+#  => => transferring context: 48B                                                                             0.0s 
+# ...
