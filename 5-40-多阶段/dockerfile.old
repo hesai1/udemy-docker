@@ -1,0 +1,18 @@
+FROM gcc:9.4
+
+COPY hello.c /src/hello.c
+
+WORKDIR /src
+
+RUN gcc --static -o hello hello.c
+
+ENTRYPOINT [ "/src/hello" ]
+
+CMD []
+
+
+# 直接使用gcc的镜像来运行编译后的c文件
+# 但是从下边也可以看出来，这样的镜像偏大，竟然又1.14GB
+    # $ docker image ls
+    # REPOSITORY                    TAG       IMAGE ID       CREATED        SIZE
+    # udemy-class                   tmp       efb33d91a859   21 hours ago   1.14GB

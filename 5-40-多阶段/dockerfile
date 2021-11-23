@@ -1,0 +1,20 @@
+FROM gcc:9.4 AS builder
+# 这里我们给这个镜像取了一个别名 builder
+COPY hello.c /src/hello.c
+WORKDIR /src
+RUN gcc --static -o hello hello.c
+
+# 前段的gcc镜像只用来build c文件
+
+FROM alpine:3.13.5
+# 使用一个尽可能最小的镜像，来运行编译完的bin文件
+COPY --from=builder /src/hello /src/hello
+# 从上边的builder镜像中拷贝出来文件到指定的目录
+ENTRYPOINT [ "/src/hello" ]
+CMD []
+
+# 从下边的结果中不难看出，由于实际运行的image使用的非常小，只有6.55MB
+# 在docker run时节省了相当的资源
+    # $ docker image ls
+    # REPOSITORY                    TAG       IMAGE ID       CREATED         SIZE
+    # udemy-class                   tmp       f336ac58c610   4 seconds ago   6.55MB
