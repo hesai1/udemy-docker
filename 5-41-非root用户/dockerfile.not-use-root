@@ -1,0 +1,24 @@
+FROM python:3.9.5-slim
+
+RUN pip install flask && \
+    groupadd -r flask && useradd -r -g flask flask && \
+    mkdir /src && \
+    chown -R flask:flask /src
+# 在上边的部分，用root创建文件夹，创建flask用户
+
+USER flask
+# 切换用户
+
+COPY app.py /src/app.py
+
+WORKDIR /src
+ENV FLASK_APP=app.py
+
+EXPOSE 5000
+
+CMD ["flask", "run", "-h", "0.0.0.0"]
+
+# 这时候我们再execc进去container时也是使用flask用户
+    # $ docker container exec -it 137 sh
+    # $ whoami
+    # flask

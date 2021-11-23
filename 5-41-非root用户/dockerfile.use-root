@@ -1,0 +1,42 @@
+FROM python:3.9.5-slim
+COPY app.py /src/app.py
+
+RUN pip install flask
+
+WORKDIR /src
+
+ENV FLASK_APP=app.py
+
+EXPOSE 5000
+
+CMD ["flask", "run", "-h", "0.0.0.0"] 
+
+# 若不做特别声明，dockerfile中的所有命令都将使用root用户执行
+# 由于container执行后，在exec时也会使用最后一个切换的user
+    # $ docker container exec -it 1 sh
+    # # whoami
+    # root
+    # # ls -l
+    # total 8
+    # drwxr-xr-x 2 root root 4096 Nov 23 07:28 __pycache__
+    # -rwxrwxrwx 1 root root  117 Nov 20 12:58 app.py
+
+# 对于docker里边默认root用户这个事情的危害，参见：
+# https://dockertips.readthedocs.io/en/latest/best-practise/no-root.html
+# 比如在运行docker的服务器上，有一个可以执行docker run的用户demo，它本身没有权限看/root
+    # [demo@docker-host ~]$ sudo ls /root
+    # [sudo] password for demo:
+    # demo is not in the sudoers file.  This incident will be reported.
+    # [demo@docker-host ~]$
+# 但我们用dome运行镜像时，将/root挂载到镜像上，镜像内的root权限可以访问被挂载的路径
+    # [demo@docker-host vagrant]$ docker run -it -v /root/:/root/tmp busybox sh
+    # / # cd /root/tmp
+    # ~/tmp # ls
+    # anaconda-ks.cfg  original-ks.cfg
+    # ~/tmp # ls -l
+    # total 16
+    # -rw-------    1 root     root          5570 Apr 30  2020 anaconda-ks.cfg
+    # -rw-------    1 root     root          5300 Apr 30  2020 original-ks.cfg
+    # ~/tmp #
+
+# 通过这种方法，甚至可以给运行docker镜像的服务器上的用户添加root权限等等
