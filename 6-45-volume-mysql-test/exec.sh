@@ -1,0 +1,1 @@
+docker exec -it udemy-demo mysql -u root -p
