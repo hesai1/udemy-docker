@@ -1,0 +1,22 @@
+FROM alpine:latest
+RUN apk update
+RUN apk --no-cache add curl
+ENV SUPERCRONIC_URL=https://github.com/aptible/supercronic/releases/download/v0.1.12/supercronic-linux-amd64 \
+    SUPERCRONIC=supercronic-linux-amd64 \
+    SUPERCRONIC_SHA1SUM=048b95b48b708983effb2e5c935a1ef8483d9e3e
+RUN curl -fsSLO "$SUPERCRONIC_URL" \
+    && echo "${SUPERCRONIC_SHA1SUM}  ${SUPERCRONIC}" | sha1sum -c - \
+    && chmod +x "$SUPERCRONIC" \
+    && mv "$SUPERCRONIC" "/usr/local/bin/${SUPERCRONIC}" \
+    && ln -s "/usr/local/bin/${SUPERCRONIC}" /usr/local/bin/supercronic
+COPY my-cron /app/my-cron
+
+# 将我么储存输出结果的地方设置为volume
+VOLUME test:/app
+# 注意
+    # 这样可以将/app下的文件独立于container保存起来
+    # 但这在这在实际运用中并不方便，这样的自动生成的volume并没有名字
+    # 为了方便其他的容器使用，在执行时需要 -v [volueme名字]:[容器内的volume路径]
+        # 但是我就纳了闷了，如果run的时候带 -v ，好像在dockerfile里边不声明也可以使用
+# RUN cron job
+CMD ["/usr/local/bin/supercronic", "/app/my-cron"]
