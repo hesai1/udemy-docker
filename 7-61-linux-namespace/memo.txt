@@ -1,0 +1,13 @@
+直接看下边这个吧
+https://dockertips.readthedocs.io/en/latest/single-host-network/network-namespace.html
+
+还有udemy的课程
+https://www.udemy.com/course/docker-china/learn/lecture/27393120#content
+
+关于linux的namespace技术的，以下引用
+
+- Linux的Namespace（命名空间）技术是一种隔离技术，
+  常用的Namespace有 user namespace, process namespace, network namespace等
+
+- 在Docker容器中，不同的容器通过Network namespace进行了隔离，
+  也就是不同的容器有各自的IP地址，路由表等，互不影响。
