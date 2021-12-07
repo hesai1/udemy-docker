@@ -1,0 +1,16 @@
+3c3
+<         "Id": "sha256:54794f322ab94d06f7ea8ec929c2bcecb220beefbbbcb0ea8a0e09c75c66bc7f",
+---
+>         "Id": "sha256:18c0a677dbb22812cbe2a6246da31625f21079592468e512d07340897f7b55d3",
+5c5
+<             "expose-demo:latest"
+---
+>             "no-expose-demo:latest"
+40,42d39
+<             "ExposedPorts": {
+<                 "5000/tcp": {}
+<             },
+97c94
+<             "LastTagTime": "2021-12-07T04:58:10.3328097Z"
+---
+>             "LastTagTime": "2021-12-07T04:58:12.0051341Z"
