@@ -1,0 +1,28 @@
+# docker compose文件的语法说明 参考如下文档
+# https://docs.docker.com/compose/compose-file/
+
+# dockerfile定义了image的内容，依照文件来build镜像文件
+# docker-compose.yaml则是定义了container如何启动，依照文件来run容器，甚至creat volume和network
+version: "3.8"
+#设定的内容也很好理解
+services:       # 运行的容器 
+  flask-demo:   #容器名
+    image: flask-demo:latest    #使用的镜像
+    environment:                #添加环境变量，相当于run时候的 --env参数
+      - REDIS_HOST=redis-server
+    networks:                   #网络设定，相当于run的--network参数
+      - demo-network
+    ports:                      #端口转发的设定，相当于run的-p选项
+      - 8080:5000
+
+  redis-server:
+    image: redis:latest
+    networks:
+     - demo-network
+
+# 可选，相当于 docker volume create
+# volumes: 
+#   volume-name:
+
+networks:       #network的构筑，这里相当于network create demo-network
+  demo-network:       #并没有使用任何的参数，这里也和network的默认一样，直接构建的时bridge

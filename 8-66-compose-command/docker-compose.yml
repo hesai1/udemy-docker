@@ -1,0 +1,24 @@
+version: "3.3"
+
+services: 
+  flask-demo: 
+    # 可以通过container_name来指定容器的名字
+    # 容器名将不包含compose的project名和后边的编号
+      # 但这样容易影响容器进行横向scale，使用前应考虑
+    # container_name: flask-demo
+    image: flask-demo:latest    
+    environment:                
+      - REDIS_HOST=redis-server
+    networks:                   
+      - demo-network
+    ports:                      
+      - 8080:5000
+
+  redis-server:
+    image: redis:latest
+    networks:
+     - demo-network
+
+
+networks:      
+  demo-network:
