@@ -1,0 +1,41 @@
+version: "3.3"
+
+services: 
+  flask-demo: 
+    # 对于我们的service使用的镜像，前一节我们时单独构建了以此
+    # 其实也可以将service需要的镜像的build方法卸载compose的yml中
+    
+    # 最简单的比如下边
+    # build: ./flask
+        # 指定了build需要的路径(context)，
+        # 默认的使用名为dockerfile的文件进行编译
+
+    # 可以像下边这样手动设置各种参数
+    # docker build的所有的参数都可以在这里有所对应，详情参照文档
+    # https://docs.docker.com/compose/compose-file/compose-file-v3/#build
+    build:
+      # 指定build使用的路径路径(context)
+      context: ./flask
+      # 指定build使用的dockerfile名字
+      dockerfile: flask-demo.dockerfile
+    
+    # 这里手动指定了image的名字
+      # 如果定义中有build，up时当然不会去远程寻找此镜像
+      # 此处的镜像名可以省略，省略后镜像为[project名]+[service名]
+      # 手动指定后名字将变成我们指定的名字
+    image: flask-demo:latest
+    environment:                
+      - REDIS_HOST=redis-server
+    networks:                   
+      - demo-network
+    ports:                      
+      - 8080:5000
+
+  redis-server:
+    image: redis:latest
+    networks:
+     - demo-network
+
+
+networks:      
+  demo-network:
