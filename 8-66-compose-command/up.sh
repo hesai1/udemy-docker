@@ -1,5 +1,5 @@
 # build镜像,redis直接拉取官方版本
-docker image build -f flask-demo.dockerfile -t flask-demo .
+docker image build -f flask-demo.dockerfile -t flask-demo:latest .
 docker image pull redis:latest
 
 # 关于启动docker-compose

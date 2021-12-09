@@ -11,6 +11,8 @@ docker-compose build
 # 镜像的拉取也一样。使用下边的命令会从远程拉取所有service需要的image
     # 注意时所有service，包括flask-demo
     # 因此会看到拉取镜像 flask-demo 失败
+        # 这里并不会失败，这次在设定镜像名字里包含了lastest标签
+        # 之前失败应该可能是没有包含标签的原因
 docker-compose pull
 
 docker-compose up -d 
