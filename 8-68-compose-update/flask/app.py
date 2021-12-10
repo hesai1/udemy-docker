@@ -11,4 +11,3 @@ redis = Redis(host=os.environ.get('REDIS_HOST', '127.0.0.1'), port=6379)
 def hello():
     redis.incr('hits')
     return f"Hello Container World! I have been seen {redis.get('hits').decode('utf-8')} times and my hostname is {socket.gethostname()}.\n"
-# test at Fri Dec 10 20:08:01 JST 2021
